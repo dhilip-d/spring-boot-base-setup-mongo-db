@@ -1,12 +1,10 @@
 package com.basesetup.login.service;
 
-import com.basesetup.login.dto.auth.LoginRequestDto;
-import com.basesetup.login.dto.auth.SignupUserDto;
+import com.basesetup.login.dto.LoginRequestDto;
+import com.basesetup.login.dto.RegisterUserDto;
 import com.basesetup.login.exception.ApplicationException;
 import com.basesetup.login.model.User;
-import com.basesetup.login.repository.RoleRepository;
 import com.basesetup.login.repository.UserRepository;
-import com.basesetup.login.utils.Constant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -20,11 +18,10 @@ import java.time.LocalDateTime;
 public class AuthenticationService {
 
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
 
-    public String signup(SignupUserDto input) {
+    public String signup(RegisterUserDto input) {
         if (userRepository.existsByEmail(input.getEmail()))
             throw new ApplicationException("email id already exists");
         User user = new User();
@@ -34,12 +31,7 @@ public class AuthenticationService {
         user.setEmail(input.getEmail());
         user.setPassword(passwordEncoder.encode(input.getPassword()));
         user.setCreatedAt(LocalDateTime.now());
-        user.setCreatedBy(input.getEmail());
-        if (userRepository.count() == 0)
-            user.setRole(roleRepository.findByName(Constant.SUPER_ADMIN));
-        else
-            user.setRole(roleRepository.findByName(Constant.EMPLOYEE));
-        user.setActive(true);
+        user.setCreatedBy(input.getEmail()); // need to do - implement the UserContextHolder
         userRepository.save(user);
         return "Register successful";
     }
