@@ -1,8 +1,8 @@
 package com.basesetup.login.controller;
 
-import com.basesetup.login.dto.LoginRequestDto;
-import com.basesetup.login.dto.LoginResponseDto;
-import com.basesetup.login.dto.RegisterUserDto;
+import com.basesetup.login.dto.auth.LoginRequestDto;
+import com.basesetup.login.dto.auth.LoginResponseDto;
+import com.basesetup.login.dto.auth.SignupUserDto;
 import com.basesetup.login.model.User;
 import com.basesetup.login.service.AuthenticationService;
 import com.basesetup.login.service.JwtService;
@@ -21,7 +21,7 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    public ResponseEntity<String> register(@RequestBody @Valid RegisterUserDto registerUserDto) {
+    public ResponseEntity<String> register(@RequestBody @Valid SignupUserDto registerUserDto) {
         return ResponseEntity.ok(authenticationService.signup(registerUserDto));
     }
 

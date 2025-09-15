@@ -1,6 +1,6 @@
 package com.basesetup.login.config;
 
-import com.basesetup.login.dto.UserContextDto;
+import com.basesetup.login.dto.auth.UserContextDto;
 import com.basesetup.login.model.User;
 import com.basesetup.login.repository.UserRepository;
 import com.basesetup.login.service.JwtService;
@@ -84,6 +84,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             userContext.setUsername(user.get().getUsername());
             userContext.setFirstName(user.get().getFirstName());
             userContext.setLastName(user.get().getLastName());
+            userContext.setRole(user.get().getRole());
             UserContextHolder.setUserContext(userContext);
         }
     }

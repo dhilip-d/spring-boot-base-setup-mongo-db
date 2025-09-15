@@ -1,4 +1,4 @@
-package com.basesetup.login.dto;
+package com.basesetup.login.dto.auth;
 
 import lombok.Data;
 
